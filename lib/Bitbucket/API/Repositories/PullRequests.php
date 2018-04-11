@@ -48,27 +48,6 @@ class PullRequests extends API\Api
      */
     public function all($account, $repo, array $params = array())
     {
-        $states = array('OPEN', 'MERGED', 'DECLINED');
-        $params = array_merge(
-            array(
-                'state' => 'OPEN'
-            ),
-            $params
-        );
-
-        if (!is_array($params['state'])) {
-            $params['state'] = array($params['state']);
-        }
-
-        array_walk(
-            $params['state'],
-            function ($state) use ($states) {
-                if (!in_array($state, $states)) {
-                    throw new \InvalidArgumentException(sprintf('Unknown `state` %s', $state));
-                }
-            }
-        );
-
         return $this->getClient()->setApiVersion('2.0')->get(
             sprintf('repositories/%s/%s/pullrequests', $account, $repo),
             $params
