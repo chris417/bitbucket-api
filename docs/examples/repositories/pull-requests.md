@@ -20,13 +20,19 @@ $pull->all($account_name, $repo_slug);
 ### Get all merged pull requests: (API 2.0)
 
 ```php
-$pull->all($account_name, $repo_slug, array('state' => 'merged'));
+$pull->all($account_name, $repo_slug, array('q' => 'state="MERGED"'));
 ```
 
 ### Get all merged and declined pull requests: (API 2.0)
 
 ```php
-$pull->all($account_name, $repo_slug, array('state' => array('merged', 'declined')));
+$pull->all($account_name, $repo_slug, array('q' => '(state="MERGED" OR state="DECLINED")'));
+```
+
+### Filter all pull requests based on source branch: (API 2.0)
+
+```php
+$pull->all($account_name, $repo_slug, array('q' => 'source.branch.name=MYBRANCHNAME'));
 ```
 
 ### Create a new pull request: (API 2.0)
@@ -123,3 +129,4 @@ $pull->accept($account_name, $repo_slug, 1, array(
   * [Authentication]({{ site.url }}/examples/authentication.html)
   * [Pull requests comments](pull-requests/comments.html)
   * [BB Wiki](https://confluence.atlassian.com/display/BITBUCKET/pullrequests+Resource#pullrequestsResource-Overview)
+  * [Bitbucket Filter and Sort](https://developer.atlassian.com/bitbucket/api/2/reference/meta/filtering)
